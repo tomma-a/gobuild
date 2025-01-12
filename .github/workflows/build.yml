@@ -45,8 +45,8 @@ jobs:
         GOOS: ${{ github.event.inputs.goos }}
         GOARCH: ${{ github.event.inputs.goarch }}
       run: |
-      cd  buildp
-      ${{ github.event.inputs.buildcmd }}
+          cd  buildp
+          ${{ github.event.inputs.buildcmd }}
     - name:  upload artifact
       use: actions/upload-artifact@v4
       with:

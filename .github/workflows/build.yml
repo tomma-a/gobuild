@@ -51,3 +51,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: ./${{ github.event.inputs.binary  }}
+        retention-days: 4

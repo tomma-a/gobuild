@@ -1,0 +1,44 @@
+on:
+  release:
+    types: [created]
+    inputs:
+        github:
+          description: "github repo"
+          required: true
+          type: string
+        binary:
+          description: "binary name"
+          required: true
+          type: string
+        goos:
+          description: "goos"
+          required: true
+          type: string
+          default: "linux"
+        goarch:
+          description:  "goarch"
+          required: true
+          type: string
+          default: "amd64"
+
+permissions:
+    contents: write
+    packages: write
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout the code
+      uses: actions/checkout@master
+        with:
+          repository: ${{ fromJSON(inputs.github) }}
+          path: buildp
+    - uses: wangyoucao577/go-release-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ fromJSON(inputs.goos) }}
+        goarch: ${{ fromJSON(inputs.goarch) }}
+        project_path: "./buildp"
+        binary_name: $${{ fromJSON(inputs.binary) }}

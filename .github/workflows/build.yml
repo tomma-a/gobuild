@@ -46,8 +46,9 @@ jobs:
         GOARCH: ${{ github.event.inputs.goarch }}
       run: |
           cd  buildp
+          echo "${{ github.event.inputs.buildcmd }}"
           ${{ github.event.inputs.buildcmd }}
-    - run:  ls -lht
+    - run:  ls -lht ./buildp
     - name:  upload artifact
       uses: actions/upload-artifact@v4
       with:

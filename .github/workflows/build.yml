@@ -9,6 +9,11 @@ on:
           description: "binary name"
           required: true
           type: string
+        buildcmd:
+          description: "command to build"
+          required: true
+          type: string
+          default: "go build"
         goos:
           description: "goos"
           required: true
@@ -34,10 +39,15 @@ jobs:
       with:
         repository: ${{ github.event.inputs.github }}
         path: "buildp"
-    - uses: wangyoucao577/go-release-action@v1
+    - uses: actions/setup-go@v5
+    - name:  build code
+      env: 
+        GOOS: ${{ github.event.inputs.goos }}
+        GOARCH: ${{ github.event.inputs.goarch }}
+      run: |
+      cd  buildp
+      ${{ github.event.inputs.buildcmd }}
+    - name:  upload artifact
+      use: actions/upload-artifact@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ github.event.inputs.goos }}
-        goarch: ${{ github.event.inputs.goarch }}
-        project_path: "./buildp"
-        binary_name: $${{ github.event.inputs.binary }}
+        path: ./${{ github.event.inputs.binary  }}

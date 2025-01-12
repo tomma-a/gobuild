@@ -37,7 +37,7 @@ jobs:
     - uses: wangyoucao577/go-release-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ fromJSON(inputs.goos) }}
-        goarch: ${{ fromJSON(inputs.goarch) }}
+        goos: ${{ github.event.inputs.goos }}
+        goarch: ${{ github.event.inputs.goarch }}
         project_path: "./buildp"
-        binary_name: $${{ fromJSON(inputs.binary) }}
+        binary_name: $${{ github.event.inputs.binary }}

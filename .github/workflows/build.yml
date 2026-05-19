@@ -49,8 +49,13 @@ jobs:
           echo "${{ github.event.inputs.buildcmd }}"
           ${{ github.event.inputs.buildcmd }}
     - run:  ls -lht ./buildp
-    - name:  upload artifact
-      uses: actions/upload-artifact@v4
+    - name: Release
+      uses: softprops/action-gh-release@v3
       with:
-        path: ./buildp/${{ github.event.inputs.binary  }}
-        retention-days: 4
+          files: |
+            ./buildp/${{ github.event.inputs.binary  }}
+    #- name:  upload artifact
+    #  uses: actions/upload-artifact@v4
+    #  with:
+    #    path: ./buildp/${{ github.event.inputs.binary  }}
+    #    retention-days: 4

@@ -52,7 +52,12 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v3
       with:
-          tag: abc
+          tag_name: main-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          body: |
+            Automated release from main branch.
+
+            Commit: ${{ github.sha }}
           files: |
             ./buildp/${{ github.event.inputs.binary  }}
     #- name:  upload artifact
